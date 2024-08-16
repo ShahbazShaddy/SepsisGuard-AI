@@ -15,7 +15,7 @@ def process_data(form_data):
     This function processes the form data to check against the sepsis criteria.
     """
     # Get Groq API key
-    groq_api_key = os.environ.get("API", "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")
+    groq_api_key = os.environ.get("API", "ADD_YOUR_API")
     model = 'llama3-8b-8192'
     
     # Initialize Groq Langchain chat object
