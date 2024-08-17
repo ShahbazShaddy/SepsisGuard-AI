@@ -21,8 +21,13 @@ def process_data(form_data):
     :param form_data: Dictionary containing the form data
     :return: Sepsis status ('Positive' or 'Negative')
     """
+<<<<<<< HEAD
     api_key = os.getenv("GROQ_API_KEY")
     groq_api_key = os.environ.get("API", api_key)
+=======
+    # Get Groq API key
+    groq_api_key = os.environ.get("API", "ADD_YOUR_API")
+>>>>>>> cf6183059a1d9bf3bedcb9e84d86998ec04f5e9e
     model = 'llama3-8b-8192'
     
     groq_chat = ChatGroq(groq_api_key=groq_api_key, model_name=model)
