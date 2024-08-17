@@ -51,7 +51,7 @@ def submit():
             'You Concerns': concerns
         }
         sepsis_status = process_data(form_data)
-
+        
         # Generate a new ID (UUID in this case)
         record_id = str(uuid.uuid4())
 
@@ -61,7 +61,8 @@ def submit():
             writer.writerow([record_id, first_name, last_name, gender, temperature, heart_rate, respiratory_rate, wbc, blood_group, concerns, sepsis_status])
 
         # Redirect to the home page
-        return redirect('/')
+        # return redirect('/')
+        return jsonify({'sepsis_status': sepsis_status})
 
 # Path to your CSV file
 CSV_FILE_PATH = './static/data.csv'

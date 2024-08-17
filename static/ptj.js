@@ -161,6 +161,55 @@ themeButton.addEventListener("click", () => {
   localStorage.setItem("selected-icon", getCurrentIcon());
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  const patientForm = document.getElementById('patientForm');
+  if (patientForm) {
+      patientForm.addEventListener('submit', function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          const formData = new FormData(patientForm);
+
+          fetch('/submit', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              const sepsis_status = data.sepsis_status;
+
+              // Show alert based on the sepsis_status
+              if (sepsis_status === 'Positive') {
+                  Swal.fire({
+                      title: 'Alert',
+                      text: 'Sepsis Status is Positive! Early intervention is required.',
+                      icon: 'warning',
+                      confirmButtonText: 'OK'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          // Reset the form fields
+                          patientForm.reset();
+                      }
+                  });
+              } else {
+                  Swal.fire({
+                      title: 'No Threat',
+                      text: 'No sepsis threat found.',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          // Reset the form fields
+                          patientForm.reset();
+                      }
+                  });
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      });
+  }
+});
 
 // Path to your CSV file
 const csvFilePath = '../static/data.csv';

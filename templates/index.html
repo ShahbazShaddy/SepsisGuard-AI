@@ -151,7 +151,7 @@
         <h2 class="section__title">Patient Detail Form</h2>
 
         <div class="registration-form">
-          <form action="/submit" method="POST">
+          <form id="patientForm">
             <div class="form-group">
                 <input type="text" name="fname" class="form-control item" placeholder="First Name" required>
             </div>
@@ -167,16 +167,16 @@
                 </select>
             </div>
             <div class="form-group">
-              <input type="text" name="temperature" class="form-control item" placeholder="Temperature" required>
+              <input type="text" name="temperature" class="form-control item" placeholder="Temperature (°C)" required>
             </div>
             <div class="form-group">
-              <input type="text" name="heart-rate" class="form-control item" placeholder="Heart Rate" required>
+              <input type="text" name="heart-rate" class="form-control item" placeholder="Heart Rate (bpm)" required>
             </div>
             <div class="form-group">
-              <input type="text" name="respiratory-rate" class="form-control item" placeholder="Reapiratory Rate" required>
+              <input type="text" name="respiratory-rate" class="form-control item" placeholder="Reapiratory Rate (breaths per minute)" required>
             </div>
             <div class="form-group">
-              <input type="text" name="wcb" class="form-control item" placeholder="White Blood Cells" required>
+              <input type="text" name="wcb" class="form-control item" placeholder="White Blood Cells (/mm³)" required>
             </div>
             <!-- <div class="form-group">
                 <input type="email" name="email" class="form-control item" placeholder="Email" required>
