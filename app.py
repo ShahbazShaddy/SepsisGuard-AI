@@ -7,11 +7,17 @@ from model import process_data
 
 app = Flask(__name__)
 
-# Ensure the data.csv file exists with the new headers
-if not os.path.exists('data.csv'):
-    with open('data.csv', 'w', newline='') as file:
+# Ensure the static directory and data.csv file exist with the new headers
+directory = './static'
+path = os.path.join(directory, 'data.csv')
+
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+if not os.path.exists(path):
+    with open(path, 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['First Name', 'Last Name', 'Gender', 'Temperature', 'Heart Rate', 'Respiratory Rate', 'White Blood Cells', 'Blood Group', 'Your Concerns'])
+        writer.writerow(['First Name', 'Last Name', 'Gender', 'Temperature', 'Heart Rate', 'Respiratory Rate', 'White Blood Cells', 'Blood Group', 'Your Concerns', 'Sepsis'])
 
 @app.route('/')
 def index():
@@ -30,12 +36,7 @@ def submit():
         blood_group = request.form['blood-group']
         concerns = request.form['You Concerns']
 
-        # Save the data to data.csv
-        with open('data.csv', 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([first_name, last_name, gender, temperature, heart_rate, respiratory_rate, wbc, blood_group, concerns])
-
-        # Process the data using the model
+        # Process the data using the model to check for sepsis
         form_data = {
             'fname': first_name,
             'Lname': last_name,
@@ -47,7 +48,12 @@ def submit():
             'blood-group': blood_group,
             'You Concerns': concerns
         }
-        process_data(form_data)
+        sepsis_status = process_data(form_data)
+
+        # Save the data to data.csv
+        with open(path, 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([first_name, last_name, gender, temperature, heart_rate, respiratory_rate, wbc, blood_group, concerns, sepsis_status])
 
         # Redirect to the home page
         return redirect('/')

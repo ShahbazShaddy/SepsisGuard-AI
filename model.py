@@ -1,5 +1,5 @@
 import os
-import csv
+from bayesian_training import train_bayesian_filter
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -9,22 +9,24 @@ from langchain_core.prompts import (
 from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
 
 def process_data(form_data):
     """
-    This function processes the form data to check against the sepsis criteria.
+    Process the form data and classify the chatbot's response for sepsis.
+    
+    :param form_data: Dictionary containing the form data
+    :return: Sepsis status ('Positive' or 'Negative')
     """
-    # Get Groq API key
-    groq_api_key = os.environ.get("API", "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")
+    api_key = os.getenv("GROQ_API_KEY")
+    groq_api_key = os.environ.get("API", api_key)
     model = 'llama3-8b-8192'
     
-    # Initialize Groq Langchain chat object
-    groq_chat = ChatGroq(
-        groq_api_key=groq_api_key, 
-        model_name=model
-    )
+    groq_chat = ChatGroq(groq_api_key=groq_api_key, model_name=model)
     
-    # Prepare the system prompt
     system_prompt = '''You are tasked with determining whether a patient has sepsis based on the following criteria. If the patient meets any of these criteria, provide a short alert and strongly recommend early intervention. Here are the criteria:
 1. **Temperature**:
    - Greater than 38 °C (100.4 °F) or
@@ -44,11 +46,8 @@ def process_data(form_data):
 
 If a patient meets any of these criteria, respond with an alert message and strongly advise the patient to seek early medical intervention immediately.'''
 
-    conversational_memory_length = 5  # Number of previous messages the chatbot will remember
+    memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
 
-    memory = ConversationBufferWindowMemory(k=conversational_memory_length, memory_key="chat_history", return_messages=True)
-
-    # Construct a chat prompt template
     prompt = ChatPromptTemplate.from_messages(
         [
             SystemMessage(content=system_prompt),
@@ -57,15 +56,8 @@ If a patient meets any of these criteria, respond with an alert message and stro
         ]
     )
 
-    # Create a conversation chain
-    conversation = LLMChain(
-        llm=groq_chat,
-        prompt=prompt,
-        verbose=False,
-        memory=memory,
-    )
+    conversation = LLMChain(llm=groq_chat, prompt=prompt, verbose=False, memory=memory)
 
-    # Construct the input based on form data
     user_input = (
         f"Patient Details:\n"
         f"First Name: {form_data['fname']}\n"
@@ -79,6 +71,14 @@ If a patient meets any of these criteria, respond with an alert message and stro
         f"Concerns: {form_data['You Concerns']}\n"
     )
 
-    # Get the model's response
     response = conversation.predict(human_input=user_input)
     print("Chatbot:", response)
+
+    # Initialize Bayesian filter by training it with the sepsis data
+    bayesian_filter = train_bayesian_filter()
+
+    # Classify the response
+    sepsis_status = bayesian_filter.calculate_prob(response)
+    
+    # Return the sepsis status
+    return sepsis_status

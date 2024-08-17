@@ -163,7 +163,7 @@ themeButton.addEventListener("click", () => {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  Papa.parse("../data.csv", {
+  Papa.parse("./data.csv", {
     download: true,
     header: true,
     complete: function (results) {
@@ -176,20 +176,23 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Clear any existing content
     rowContainer.innerHTML = '';
-
+  
     data.forEach((row, index) => {
-      // Check if the Sepsis field is "Positive"
-      if (row["Sepsis"] === "Positive") {
+      // Normalize the Sepsis field
+      const sepsisStatus = (row["Sepsis"] || "").trim(); // Trim any extra spaces
+  
+      // Check if the Sepsis field is "Positive" (case-sensitive)
+      if (sepsisStatus === "Positive") {
         // Create a Bootstrap card for each alert
         const colDiv = document.createElement("div");
         colDiv.className = "col-md-4 mb-4";  // Bootstrap classes for grid and spacing
-
+  
         const alertCard = document.createElement("div");
         alertCard.className = "card border-warning";  // Bootstrap card with warning border
-
+  
         const cardBody = document.createElement("div");
         cardBody.className = "card-body";
-
+  
         // Create elements for each column in the row
         for (const key in row) {
           const alertDetail = document.createElement("p");
@@ -197,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
           alertDetail.innerText = `${key}: ${row[key]}`;
           cardBody.appendChild(alertDetail);
         }
-
+  
         // Create delete button
         const deleteButton = document.createElement("button");
         deleteButton.className = "btn btn-danger"; // Bootstrap class for button styling
@@ -205,16 +208,16 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteButton.addEventListener("click", () => {
           deleteAlert(index); // Call the delete function with the row index
         });
-
+  
         // Add delete button to the card body
         cardBody.appendChild(deleteButton);
-
+  
         alertCard.appendChild(cardBody);
         colDiv.appendChild(alertCard);
         rowContainer.appendChild(colDiv);
       }
     });
-
+  
     console.log("Number of boxes added:", rowContainer.children.length); // Debugging line
   }
 
@@ -236,5 +239,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-  
 });
+

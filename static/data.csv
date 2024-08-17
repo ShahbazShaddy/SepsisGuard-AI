@@ -1,0 +1,4 @@
+First Name,Last Name,Gender,Temperature,Heart Rate,Respiratory Rate,White Blood Cells,Blood Group,Your Concerns,Sepsis
+Shahbaz,Ali,Male,101 Degree C,80,70,12000,A,none,Negative
+Farman Ali,Ali,Male,100 Degree C,80,70,12000,A,none,Positive
+Shahbaz,Ali,Male,101 Degree C,80,70,12000,A,none,Positive
