@@ -1,5 +1,3 @@
-# bayesian_filter.py
-
 import math
 from collections import defaultdict
 

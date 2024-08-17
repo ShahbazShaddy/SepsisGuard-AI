@@ -162,82 +162,74 @@ themeButton.addEventListener("click", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  Papa.parse("./data.csv", {
-    download: true,
-    header: true,
-    complete: function (results) {
-      generateAlertBoxes(results.data);
-    }
+// Path to your CSV file
+const csvFilePath = '../static/data.csv';
+
+// Function to create an alert box
+function createAlertBox(data) {
+  return `
+      <div class="alert-box" data-id="${data['ID']}">
+          <strong>Alert!</strong> Sepsis detected in ${data['First Name']} ${data['Last Name']} (${data['Gender']}).
+          <br>Temperature: ${data['Temperature']}°C
+          <br>Heart Rate: ${data['Heart Rate']} bpm
+          <br>Respiratory Rate: ${data['Respiratory Rate']} breaths/min
+          <br>White Blood Cells: ${data['White Blood Cells']}
+          <br>Blood Group: ${data['Blood Group']}
+          <br><button class="delete-btn">Delete</button>
+      </div>
+  `;
+}
+
+// Function to load and process the CSV data
+function loadCSV() {
+  Papa.parse(csvFilePath, {
+      download: true,
+      header: true,
+      complete: function(results) {
+          const alertContainer = document.querySelector('#alert-container');
+          alertContainer.innerHTML = ''; // Clear previous alerts
+          results.data.forEach(row => {
+              if (row['Sepsis'].toLowerCase() === 'positive') {
+                  const alertBox = createAlertBox(row);
+                  alertContainer.innerHTML += alertBox;               
+              }
+          });
+
+          // Add event listeners to delete buttons
+          document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const alertBox = this.parentElement;
+                const id = alertBox.getAttribute('data-id'); // Get the ID from the alert box
+                deleteRecord(id); // Call deleteRecord with the ID
+            });
+          });
+          
+      }
   });
+}
 
-  function generateAlertBoxes(data) {
-    const rowContainer = document.querySelector("#alert-container .row");
-    
-    // Clear any existing content
-    rowContainer.innerHTML = '';
-  
-    data.forEach((row, index) => {
-      // Normalize the Sepsis field
-      const sepsisStatus = (row["Sepsis"] || "").trim(); // Trim any extra spaces
-  
-      // Check if the Sepsis field is "Positive" (case-sensitive)
-      if (sepsisStatus === "Positive") {
-        // Create a Bootstrap card for each alert
-        const colDiv = document.createElement("div");
-        colDiv.className = "col-md-4 mb-4";  // Bootstrap classes for grid and spacing
-  
-        const alertCard = document.createElement("div");
-        alertCard.className = "card border-warning";  // Bootstrap card with warning border
-  
-        const cardBody = document.createElement("div");
-        cardBody.className = "card-body";
-  
-        // Create elements for each column in the row
-        for (const key in row) {
-          const alertDetail = document.createElement("p");
-          alertDetail.className = "card-text";  // Bootstrap card text
-          alertDetail.innerText = `${key}: ${row[key]}`;
-          cardBody.appendChild(alertDetail);
-        }
-  
-        // Create delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "btn btn-danger"; // Bootstrap class for button styling
-        deleteButton.innerText = "Delete";
-        deleteButton.addEventListener("click", () => {
-          deleteAlert(index); // Call the delete function with the row index
-        });
-  
-        // Add delete button to the card body
-        cardBody.appendChild(deleteButton);
-  
-        alertCard.appendChild(cardBody);
-        colDiv.appendChild(alertCard);
-        rowContainer.appendChild(colDiv);
-      }
-    });
-  
-    console.log("Number of boxes added:", rowContainer.children.length); // Debugging line
-  }
-
-  function deleteAlert(index) {
-    console.log("Deleting index:", index);
-    fetch("./assets/delete_alert.php", {
-      method: "POST",
+// Function to delete a record from the CSV and remove the alert box
+function deleteRecord(id) {
+  fetch('/delete-record', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+          'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ index })
-    })
-    .then(response => response.json())
-    .then(data => {
+      body: JSON.stringify({ id: id })
+  })
+  .then(response => response.json())
+  .then(data => {
       if (data.success) {
-        document.querySelectorAll("#alert-container .row .col-md-4")[index].remove();
+          const alertBox = document.querySelector(`.alert-box[data-id="${id}"]`);
+          if (alertBox) {
+              alertBox.remove(); // Remove the alert box from the DOM
+          }
       } else {
-        alert("Failed to delete the alert.");
+          alert('Error deleting record: ' + data.message);
       }
-    });
-  }
-});
+  })
+  .catch(error => console.error('Error:', error));
+}
 
+// Load CSV data on page load
+window.onload = loadCSV;

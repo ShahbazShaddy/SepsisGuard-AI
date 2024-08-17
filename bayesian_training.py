@@ -8,6 +8,7 @@ def train_bayesian_filter():
     bayesian_filter = BayesianFilter()
 
     # Train the filter with comprehensive data
+    bayesian_filter.train("**SEPSIS ALERT**", "Positive")
     bayesian_filter.train("SEPSIS ALERT. Strongly recommend early intervention.", "Positive")
     bayesian_filter.train("Patient has a high temperature and fast heart rate. Recommend seeking immediate medical attention.", "Positive")
     bayesian_filter.train("Elevated temperature is the primary trigger for this alert. Advise to go to the emergency department.", "Positive")
