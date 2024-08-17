@@ -21,7 +21,6 @@ def process_data(form_data):
     :param form_data: Dictionary containing the form data
     :return: Sepsis status ('Positive' or 'Negative')
     """
-<<<<<<< HEAD
     api_key = os.getenv("GROQ_API_KEY")
     groq_api_key = os.environ.get("API", api_key)
 =======
