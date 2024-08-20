@@ -1,5 +1,8 @@
-ID,First Name,Last Name,Gender,Temperature,Heart Rate,Respiratory Rate,White Blood Cells,Blood Group,Your Concerns,Sepsis
-0cf49708-4579-441e-99ea-a31e51c81931,Shahbaz,Ali,Male,38,80,18,11000,A,none,Negative
-b73d9289-2cf2-49d1-a7ad-accf36548031,Shahbaz,Ali,Male,38,80,18,11000,A,none,Negative
-f49eaf84-922e-4896-aabd-c68ccf6c02a9,Shujaat,Ali,Male,38,80,18,12001,A,none,Negative
-fa1939a7-c914-4540-9bf8-f35029f46af4,Jaffar,Ali,Male,38,80,18,12001,A,none,Positive
+First Name,Last Name,Gender,Temperature,Heart Rate,Respiratory Rate,White Blood Cells,Blood Group,Your Concerns,Sepsis
+Shahbaz,Ali,Male,101 Degree C,80,70,12000,A,none,Positive
+Shujaat,Ali,Male,101 Degree C,80,70,12000,A,none,Positive
+Jaffar,Ali,Male,101 Degree C,80,18,12000,A,none,Negative
+Carol,Cooper,Female,101 Degree C,44,70,12000,A,none,Positive
+Shahbaz,Ali,Male,38,80,70,12000,A,none,Positive
+Carol,Cooper,Male,32,80,19,12000,A,none,Positive
+Shahbaz,Ali,Male,30,80,18,12000,A,none,Positive

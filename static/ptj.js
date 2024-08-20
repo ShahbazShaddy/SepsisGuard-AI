@@ -153,12 +153,24 @@ if (selectedTheme) {
 
 // Activate / deactivate the theme manually with the button
 themeButton.addEventListener("click", () => {
+  // Toggle the dark / icon theme
+  const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.body.setAttribute('data-theme', newTheme);
+  themeButton.classList.toggle(iconTheme);
+  
+  // Save the theme and icon in localStorage
+  localStorage.setItem("selected-theme", newTheme);
+  localStorage.setItem("selected-icon", getCurrentIcon());});
+
+// Activate / deactivate the theme manually with the button
+themeButton.addEventListener("click", () => {
   // Add or remove the dark / icon theme
   document.body.classList.toggle(darkTheme);
   themeButton.classList.toggle(iconTheme);
   // We save the theme and the current icon that the user chose
   localStorage.setItem("selected-theme", getCurrentTheme());
   localStorage.setItem("selected-icon", getCurrentIcon());
+  
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -214,70 +226,39 @@ document.addEventListener('DOMContentLoaded', function () {
 // Path to your CSV file
 const csvFilePath = '../static/data.csv';
 
-// Function to create an alert box
-function createAlertBox(data) {
-  return `
-      <div class="alert-box" data-id="${data['ID']}">
-          <strong>Alert!</strong> Sepsis detected in ${data['First Name']} ${data['Last Name']} (${data['Gender']}).
-          <br>Temperature: ${data['Temperature']}°C
-          <br>Heart Rate: ${data['Heart Rate']} bpm
-          <br>Respiratory Rate: ${data['Respiratory Rate']} breaths/min
-          <br>White Blood Cells: ${data['White Blood Cells']}
-          <br>Blood Group: ${data['Blood Group']}
-          <br><button class="delete-btn">Delete</button>
-      </div>
-  `;
+// Function to create a table row
+function createTableRow(data) {
+    return `
+        <tr>
+            <td>${data['First Name']}</td>
+            <td>${data['Last Name']}</td>
+            <td>${data['Gender']}</td>
+            <td>${data['Temperature']}°C</td>
+            <td>${data['Heart Rate']} bpm</td>
+            <td>${data['Respiratory Rate']} breaths/min</td>
+            <td>${data['White Blood Cells']}</td>
+            <td>${data['Blood Group']}</td>
+            <td>${data['Your Concerns']}</td>
+            <td>${data['Sepsis']}</td>
+        </tr>
+    `;
 }
 
 // Function to load and process the CSV data
 function loadCSV() {
-  Papa.parse(csvFilePath, {
-      download: true,
-      header: true,
-      complete: function(results) {
-          const alertContainer = document.querySelector('#alert-container');
-          alertContainer.innerHTML = ''; // Clear previous alerts
-          results.data.forEach(row => {
-              if (row['Sepsis'].toLowerCase() === 'positive') {
-                  const alertBox = createAlertBox(row);
-                  alertContainer.innerHTML += alertBox;               
-              }
-          });
-
-          // Add event listeners to delete buttons
-          document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const alertBox = this.parentElement;
-                const id = alertBox.getAttribute('data-id'); // Get the ID from the alert box
-                deleteRecord(id); // Call deleteRecord with the ID
+    Papa.parse(csvFilePath, {
+        download: true,
+        header: true,
+        complete: function(results) {
+            const tableBody = document.querySelector('#alert-table tbody');
+            tableBody.innerHTML = ''; // Clear previous data
+            
+            results.data.forEach(row => {
+                const tableRow = createTableRow(row);
+                tableBody.innerHTML += tableRow;
             });
-          });
-          
-      }
-  });
-}
-
-// Function to delete a record from the CSV and remove the alert box
-function deleteRecord(id) {
-  fetch('/delete-record', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id: id })
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.success) {
-          const alertBox = document.querySelector(`.alert-box[data-id="${id}"]`);
-          if (alertBox) {
-              alertBox.remove(); // Remove the alert box from the DOM
-          }
-      } else {
-          alert('Error deleting record: ' + data.message);
-      }
-  })
-  .catch(error => console.error('Error:', error));
+        }
+    });
 }
 
 // Load CSV data on page load

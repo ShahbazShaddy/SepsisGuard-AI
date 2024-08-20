@@ -7,8 +7,7 @@ def train_bayesian_filter():
     """
     bayesian_filter = BayesianFilter()
 
-    # Train the filter with comprehensive data
-    # Positive Cases
+    # Positive Cases (indicating sepsis or high risk)
     bayesian_filter.train("**SEPSIS ALERT**", "Positive")
     bayesian_filter.train("the patient meets one criterion for sepsis", "Positive")
     bayesian_filter.train("Strongly recommend immediate medical intervention to address potential sepsis", "Positive")
@@ -21,10 +20,12 @@ def train_bayesian_filter():
     bayesian_filter.train("Patient's vital signs indicate a potential sepsis risk. Recommend immediate evaluation.", "Positive")
     bayesian_filter.train("Patient’s temperature is just above the normal threshold. Monitor closely for sepsis symptoms.", "Positive")
     bayesian_filter.train("Heart rate is slightly above the normal range, indicating a potential risk for sepsis. Further evaluation needed.", "Positive")
-    
-    # Negative Cases
+    bayesian_filter.train("Temperature is 101 °C, which is a clear sign of potential sepsis.", "Positive")
+    bayesian_filter.train("Temperature exceeds 100 °C, which is a sign of sepsis risk.", "Positive")
+    bayesian_filter.train("Patient has a high temperature of 101 °C, indicating sepsis.", "Positive")
+
+    # Negative Cases (indicating no sepsis risk)
     bayesian_filter.train("does not meet any of the criteria for sepsis", "Negative")
-    bayesian_filter.train("SEPSIS ALERT. Strongly recommend early intervention.", "Positive")
     bayesian_filter.train("No signs of sepsis. Patient's vital signs are within normal range.", "Negative")
     bayesian_filter.train("No intervention needed. Patient is stable.", "Negative")
     bayesian_filter.train("Normal temperature, heart rate, and respiratory rate. No sepsis alert triggered.", "Negative")
@@ -38,5 +39,7 @@ def train_bayesian_filter():
     bayesian_filter.train("Patient with a known fever due to an ongoing non-infectious condition. No sepsis risk identified.", "Negative")
     bayesian_filter.train("Chronic respiratory issues causing elevated respiratory rate. No signs of sepsis present.", "Negative")
     bayesian_filter.train("Patient has a chronic condition affecting WBC count. Current levels do not indicate sepsis.", "Negative")
-
+    bayesian_filter.train("Patient has a fever but no other sepsis signs. Monitor and reassess if necessary.", "Negative")
+    bayesian_filter.train("Patient's temperature is 100 °C, which is slightly elevated but not sepsis.", "Negative")
+    
     return bayesian_filter

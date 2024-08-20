@@ -30,15 +30,15 @@ def process_data(form_data):
     system_prompt = '''You are tasked with determining whether a patient has sepsis based on the following criteria. If the patient meets any of these criteria, provide a short alert and strongly recommend early intervention. Here are the criteria:
 
 Temperature:
-39 °C
+> 39 °C and
 < 36 °C
 Heart Rate:
 ≥ 91 bpm
 Respiratory Rate:
-20 breaths per minute
+Should not greater than 20 breaths per minute
 White Blood Cells (WBC):
-12,000 /mm³
-< 4,000 /mm³
+Should not increase than 12,000 /mm³ or
+Sgould not decrease than 4,000 /mm³
 If a patient meets any of these criteria, generate a strong alert and recommendation for early medical intervention. The input includes the following patient details:
 
 {human_input}
