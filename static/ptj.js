@@ -200,6 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
                       if (result.isConfirmed) {
                           // Reset the form fields
                           patientForm.reset();
+                          // Reload the CSV data after the alert is confirmed
+                          loadCSV();
                       }
                   });
               } else {
@@ -212,6 +214,8 @@ document.addEventListener('DOMContentLoaded', function () {
                       if (result.isConfirmed) {
                           // Reset the form fields
                           patientForm.reset();
+                          // Reload the CSV data after the alert is confirmed
+                          loadCSV();
                       }
                   });
               }
@@ -246,20 +250,24 @@ function createTableRow(data) {
 
 // Function to load and process the CSV data
 function loadCSV() {
-    Papa.parse(csvFilePath, {
-        download: true,
-        header: true,
-        complete: function(results) {
-            const tableBody = document.querySelector('#alert-table tbody');
-            tableBody.innerHTML = ''; // Clear previous data
-            
-            results.data.forEach(row => {
-                const tableRow = createTableRow(row);
-                tableBody.innerHTML += tableRow;
-            });
-        }
-    });
+  Papa.parse(csvFilePath, {
+      download: true,
+      header: true,
+      complete: function(results) {
+          const tableBody = document.querySelector('#alert-table tbody');
+          tableBody.innerHTML = ''; // Clear previous data
+
+          // Exclude the last row
+          const rowsToDisplay = results.data.slice(0, -1);
+
+          rowsToDisplay.forEach(row => {
+              const tableRow = createTableRow(row);
+              tableBody.innerHTML += tableRow;
+          });
+      }
+  });
 }
+
 
 // Load CSV data on page load
 window.onload = loadCSV;

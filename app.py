@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import os
-import csv
+from csv import writer
 
 # Import the process_data function from model.py
 from model import process_data
@@ -17,8 +17,8 @@ if not os.path.exists(directory):
 # Initialize CSV file with headers if it does not exist
 if not os.path.exists(path):
     with open(path, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['First Name', 'Last Name', 'Gender', 'Temperature', 'Heart Rate', 'Respiratory Rate', 'White Blood Cells', 'Blood Group', 'Your Concerns', 'Sepsis'])
+        writer_object = writer(file)
+        writer_object.writerow(['First Name', 'Last Name', 'Gender', 'Temperature', 'Heart Rate', 'Respiratory Rate', 'White Blood Cells', 'Blood Group', 'Your Concerns', 'Sepsis'])
 
 @app.route('/')
 def index():
@@ -52,11 +52,15 @@ def submit():
         sepsis_status = process_data(form_data)
 
         # Save the data to data.csv
-        with open(path, 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([first_name, last_name, gender, temperature, heart_rate, respiratory_rate, wbc, blood_group, concerns, sepsis_status])
-        # Redirect to the home page
-        # return redirect('/')
+        with open(path, 'a', newline='\n') as file:
+            writer_object = writer(file)
+            # file.write('\n')
+            writer_object.writerow([
+                first_name, last_name, gender, temperature,
+                heart_rate, respiratory_rate, wbc, blood_group,
+                concerns, sepsis_status
+            ])
+
         return jsonify({'sepsis_status': sepsis_status})
 
 if __name__ == '__main__':

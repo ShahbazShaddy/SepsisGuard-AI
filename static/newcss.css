@@ -946,6 +946,11 @@ tr:hover {
     justify-content: initial;
   }
 
+  .parent-container {
+    display: flex;
+    justify-content: center; 
+  }
+
   .skills__icon,
   .skills__arrow {
     font-size: 1.75rem;
