@@ -81,6 +81,10 @@ body.dark-theme {
   --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
 }
+body {
+  overflow-x: hidden;
+}
+
 
 /*================= Button Dark/Light ===============*/
 .nav__btns {
@@ -115,6 +119,8 @@ body {
   font-size: var(--normal-font-size);
   background-color: var(--body-color);
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -153,8 +159,8 @@ img {
 
 .container {
   max-width: 768px;
-  margin-left: var(--mb-1-5);
-  margin-right: var(--mb-1-5);
+  margin: 0 auto; /* Center the container */
+  padding: 0 var(--mb-1-5); /* Optional: To add some padding inside */
 }
 
 .grid {
@@ -711,15 +717,19 @@ tr:hover {
 
 .footer {
   padding-top: 2rem;
+  width: 100%; /* Ensure footer spans the full width */
 }
 
 .footer__container {
   row-gap: 3.5rem;
+  max-width: 1200px; /* Optional: Constrain width if needed */
+  margin: 0 auto; /* Center the footer content if constrained */
 }
 
 .footer__bg {
   background-color: var(--first-color-second);
   padding: 2rem 0 3rem;
+  width: 100%; /* Ensure background spans the full width */
 }
 
 .footer__title {
@@ -765,6 +775,7 @@ tr:hover {
 .footer__social {
   color: #fff;
 }
+
 
 /*==================== Scroll Up ==================*/
 
