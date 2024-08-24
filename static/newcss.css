@@ -776,6 +776,13 @@ tr:hover {
   color: #fff;
 }
 
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  footer {
+      padding: 15px;
+      font-size: 14px;
+  }
+}
 
 /*==================== Scroll Up ==================*/
 
