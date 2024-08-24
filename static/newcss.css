@@ -496,6 +496,38 @@ tr:hover {
 }
 
 
+/* Wrapper to enable scrolling */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Basic table styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Make the table responsive on smaller screens */
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+      padding: 8px;
+      font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+      white-space: nowrap;
+  }
+
+  /* Ensure the container allows scrolling */
+  .table-wrapper {
+      overflow-x: auto;
+  }
+}
+
+
 /*================= Services ==================*/
 
 .services_container {
