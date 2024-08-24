@@ -1070,3 +1070,48 @@ tr:hover {
 .hidden {
   display: none;
 }
+
+@media screen and (max-width: 767px) {
+  .registration-form form {
+      padding: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav__list {
+      grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+      --big-font-size: 2rem;
+      --h1-font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .button {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .registration-form form {
+      padding: 20px;
+  }
+  .item, .gender {
+      width: 100%;
+      padding: 10px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .header {
+      position: static;
+  }
+}
+.home__blob-img {
+  max-width: 100%;
+  height: auto;
+}
