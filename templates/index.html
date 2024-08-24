@@ -126,6 +126,8 @@
         </div>
       </section>
 
+      
+
       <!--======================= Patient Detail Form ========================-->
 
       <section class="about section" id="form">
@@ -159,27 +161,16 @@
             <div class="form-group">
               <input type="text" name="wcb" class="form-control item" placeholder="White Blood Cells (/mm³)" required>
             </div>
-            <!-- <div class="form-group">
-                <input type="email" name="email" class="form-control item" placeholder="Email" required>
-            </div> -->
-            
-            <!-- <div class="form-group">
-                <input type="date" name="birth-date" class="form-control item" placeholder="Birth Date">
-            </div> -->
             <div class="form-group">
                 <input type="text" name="blood-group" class="form-control item" placeholder="Blood Group" required>
             </div>
-            <!-- <div class="form-group">
-                <input type="text" name="Sugar-level" class="form-control item" placeholder="Sugar Level" required>
-            </div> -->
             <div class="form-group">
                 <input type="text" name="You Concerns" class="form-control item" placeholder="Your Concerns" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-block create-account">Register</button>
             </div>
-        </form>
-        
+        </form>       
       </div>
       </section>
 
@@ -188,34 +179,37 @@
         <h2 class="section__title">Record</h2>
         <span class="section__subtitle">Recent Record of Patient Listed Here</span>
         <div class="container table-container">
-          <table id="alert-table" class="table">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>Temperature</th>
-                <th>Heart Rate</th>
-                <th>Respiratory Rate</th>
-                <th>White Blood Cells</th>
-                <th>Blood Group</th>
-                <th>Your Concerns</th>
-                <th>Sepsis</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Table rows will be inserted here -->
-            </tbody>
-          </table>
+            <table id="alert-table" class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Temperature</th>
+                        <th>Heart Rate</th>
+                        <th>Respiratory Rate</th>
+                        <th>White Blood Cells</th>
+                        <th>Blood Group</th>
+                        <th>Your Concerns</th>
+                        <th>Sepsis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table rows will be inserted here -->
+                </tbody>
+            </table>
         </div>
         <div class="parent-container">
-          <div class="about__buttons">
-              <a download="" href="../static/data.csv" class="button button--flex">
-                  Download Record<i class="fas fa-download button__icon"></i>
-              </a>
-          </div>
+          <button id="load-more-btn" class="button button--flex">Load More</button>
         </div>
-      </section>      
+        <div class="parent-container">
+            <div class="about__buttons">
+                <a download="" href="../static/data.csv" class="button button--flex">
+                    Download Record<i class="fas fa-download button__icon"></i>
+                </a>
+            </div>
+        </div>
+      </section>
 
       <!--=================== Collaboration ===================-->
       <section class="portfolio section" id="collab">
