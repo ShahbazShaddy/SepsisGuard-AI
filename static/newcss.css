@@ -1192,41 +1192,56 @@ tr:hover {
 
 .popup-content {
   position: relative;
-  margin: 10% auto;
+  margin: 5% auto; /* Adjusted margin to fit smaller screens */
   padding: 20px;
   background-color: #1e1e1e; /* Same background as the chatbot */
-  width: 90%; /* Adjusted width to be closer to chatbot's width */
-  max-width: 360px; /* Same max-width as the chatbot */
-  border-radius: 20px; /* Rounded corners to match the chatbot */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Match box-shadow */
-  color: #e0e0e0; /* Text color to match the chatbot */
+  width: 90%;
+  max-width: 500px; /* Larger max-width for better display */
+  height: 90%; /* Adjusted height for better responsive handling */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: #e0e0e0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .close {
   position: absolute;
   top: 15px;
   right: 15px;
-  font-size: 24px; /* Adjusted size for better alignment */
-  color: #e0e0e0; /* Match close button color */
+  font-size: 24px;
+  color: #e0e0e0;
   cursor: pointer;
 }
 
-button.button--flex {
-  display: inline-flex;
+#chatbot {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #007bff; /* Match button color */
-  color: #fff;
-  border: none;
-  border-radius: 20px; /* Match rounded corners of chatbot */
-  text-decoration: none;
-  font-size: 16px; /* Adjusted font size to match chatbot */
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 255, 0, 0.5); /* Match box-shadow */
-  transition: background 0.3s ease;
 }
 
-button.button--flex:hover {
-  background-color: #0056b3; /* Match hover color */
+#chatbot iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: none;
+  background-color: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .popup-content {
+    width: 100%;
+    height: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-content {
+    margin: 2% auto;
+    height: 90%;
+    width: 100%;
+  }
 }
