@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import os
 from csv import writer
+from chatbot import get_chat_response
 
 # Import the process_data function from model.py
 from model import process_data
@@ -23,6 +24,18 @@ if not os.path.exists(path):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/chatbot')
+def chatbot():
+    return render_template('chatbot.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get('message')
+    if user_message:
+        response = get_chat_response(user_message)
+        return jsonify({'response': response})
+    return jsonify({'response': 'No message received'})
 
 @app.route('/submit', methods=['POST'])
 def submit():

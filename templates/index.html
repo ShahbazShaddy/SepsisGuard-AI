@@ -111,11 +111,23 @@
               <p class="home__description">
                 AI-driven Sepsis screening alerts for early intervention and improved patient outcomes.
               </p>
-              <a href="#contact" class="button button--flex">
-                Learn More<i class="uil uil-message button__icon"></i>
-              </a>
+              <a href="javascript:void(0);" class="button button--flex" onclick="openPopup()">
+                AI CareBot<i class="uil uil-message button__icon"></i>
+              </a>          
             </div>
           </div>
+
+          <!-- Chatbot Pop-up -->
+          <div id="chatbotPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <div id="chatbot">
+                    <!-- Chatbot UI from chatbot.html -->
+                    <iframe src="/chatbot" frameborder="0" width="100%" height="500px"></iframe>
+                </div>
+            </div>
+          </div>
+
 
           <div class="home__scroll">
             <a href="#form" class="home__scroll-button button--flex">

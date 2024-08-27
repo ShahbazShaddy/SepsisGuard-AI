@@ -310,3 +310,19 @@
     // Load CSV data on page load
     window.onload = loadCSV;
 });
+
+//Neon Cursor
+document.addEventListener('mousemove', (e) => {
+  const cursor = document.getElementById('neon-cursor');
+  cursor.style.left = `${e.clientX}px`;
+  cursor.style.top = `${e.clientY}px`;
+});
+
+function openPopup(event) {
+  if (event) event.preventDefault();  // Prevents the default action of the anchor tag
+  document.getElementById('chatbotPopup').style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('chatbotPopup').style.display = 'none';
+}
