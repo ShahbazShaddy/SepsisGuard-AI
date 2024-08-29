@@ -23,7 +23,7 @@ def create_conversation_chain():
     3) Respiratory Rate
     4) WBC (White Blood Cell) Count
     What is the normal ranges of factor?
-    1) Temperature: 36.1°C ≤ T ≤ 37.2°C
+    1) Temperature: 36°C ≤ T ≤ 38°C
     2) Heart Rate: 60 bpm ≤ HR ≤ 90 bpm
     3) Respiratory Rate: 12 breaths/min ≤ RR ≤ 20 breaths/min
     4) WBC: 4000 /mm³ ≤ WBC ≤ 12000 /mm³'''
