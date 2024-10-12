@@ -74,7 +74,7 @@ def submit():
         # Prepare the new row of data
         new_row = f"{first_name},{last_name},{gender},{temperature},{heart_rate},{respiratory_rate},{wbc},{blood_group},{concerns},{sepsis_status}\n"
 
-        # Insert the new row at the top of the data #
+        # Insert the new row at the top of the data
         updated_data = [existing_data[0]] + [new_row] + existing_data[1:] if existing_data else [new_row]
 
         # Write the updated data back to the CSV file
